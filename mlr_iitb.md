@@ -8,7 +8,7 @@ Things you should know before we proceed
 
 * Generalization error: The difference between the error on test and train datasets.
 
-##Tricks to avoid over-fitting ##
+## Tricks to avoid over-fitting ##
 * Explicit regularization: minimizing $l_2$ or $l_1$ norm on weights. Dropout. Input augmentation for example adding noise to the input or random transformations over the input like random crops
 * Implicit regularization: batch norm and early stopping
 
@@ -429,12 +429,12 @@ Note: Just did not converge even after 300K iterations.
 #### Model learned on true data ####
 
 **Frobenius norm** 9.600; max: 50.636;min: 0.110  
-**Smoothness metric** 30.008 $\pm$ 0.380  
+**Smoothness metric** 29.821 $\pm$ 0.250  
 
 #### Model learned on randomized pixels ####
 
 **Frobenius norm** 10.795; max: 50.955; min: 0.063  
-**Smoothness metric** 271.234 $\pm$ 4.053  
+**Smoothness metric** 263.928 $\pm$ 3.141  
 
 Note: * The frobenius norm reported is the average over all the training varaibles.
 * The smoothness metric is reported with average and std. deviation across three runs with parameters: 100 neighbours considered in hyper-sphere given by $\epsilon$=e-3. *cross entropy loss* is used in the place of the function, f. 
