@@ -9,7 +9,7 @@ Things you should know before we proceed
 * Generalization error: The difference between the error on test and train datasets.
 
 ## Tricks to avoid over-fitting ##
-* Explicit regularization: minimizing $l_2$ or $l_1$ norm on weights. Dropout. Input augmentation for example adding noise to the input or random transformations over the input like random crops
+* Explicit regularization: minimizing $l_2$ or $l_1$ norm on weights. Dropout. Input augmentation for example, adding noise to the input or random transformations over the input like random crops
 * Implicit regularization: batch norm and early stopping
 
 For further reference, see these [slides](http://vision.stanford.edu/teaching/cs231b_spring1415/slides/alexnet_tugce_kyunghee.pdf)
@@ -35,7 +35,7 @@ We only care about ReLU (Rectified Linear Units) activation function for this ma
 
 
 
-###### Popular neral nets for Image Classification ######
+###### Popular neural nets for Image Classification ######
 **AlexNet** and **Inception** are two networks that are designed for performance on the ImageNet.
 
 AlexNet:
@@ -69,14 +69,14 @@ From Yann LeCun's "Efficient Backprop"[2]
 
 Notes: 
 
-* It is an established fact that stochastic learning gives better solution.
+* It is an established fact that stochastic learning gives a better solution.
 * (The 3rd advantage above:) Stochastic learning can deal with the case when the function being modelled changes with time. When we average over all the data, the changes go undetected. Online learning if "operate properly" can give good approximation results.
 
 
 > Advantages of Batch Learning
 >
 > 1. Conditions of convergence are well understood.
-> 2. Many acceleration techniques (e.g. conjugate gradient) only operate in batch learning.
+> 2. Many acceleration techniques (e.g. Conjugate gradient) only operate in batch learning.
 > 3. Theoretical analysis of the weight dynamics and convergence rates are simpler.
 
 Notes:
@@ -88,7 +88,7 @@ By reducing the time per update step, it is possible to reduce the computation t
 
 ###### Why is Large Batch bad? ######
 
-Although, optimization with large and small batch lead to similar performance on train set, solution obtained by large batch suffers on test set. 
+Although, optimization with large and small batch lead to similar performance on train set, the solution obtained by large batch suffers on the test set. 
 
 - Possible reasons:
   * LB methods over-fit the model; <!-- .element: class="fragment" -->
@@ -139,7 +139,7 @@ Six multi-class classification network configurations are considered.
 
 Note: 
 The numbers in the table are written in "mean+standard deviation" format summarized across five trails.  
-Observe that the difference between LB and SB is stark in test accuracy than in train.  
+Observe that the difference between LB and SB is starker in test accuracy than in train.  
 
 
 
@@ -150,7 +150,7 @@ Note: In both SB and LB cases, the network is trained so as not to deteriorate o
 
 
 
-###### An evidence for if sharpness of minima is a problem ######
+###### An evidence for if the sharpness of minima is a problem ######
 * The nature of minima can be visualized with something called parametric 1-D plots.
 * If ${x_l}^{\ast}$ and ${x_s}^{\ast}$ are the solutions (weights) corresponding to the large and small batch methods, then the 1-D parametric plots look at the nature of all solutions in 
 $\alpha\*{x_l}^{\ast}+(1-\alpha)\*{x_s}^{\ast}$. 
@@ -159,7 +159,7 @@ $\alpha\*{x_l}^{\ast}+(1-\alpha)\*{x_s}^{\ast}$.
 $\alpha$=1 corresponds to the solution of large batch and $\alpha$=0 to the small batch.
 
 
-###### An evidence for if sharpness of minima is a problem [continued...] ######
+###### An evidence for if the sharpness of minima is a problem [continued...] ######
 ![1-D Parametric plots](md_slides/_images/lb_vs_sb/param_plots.png)
 
 Note: 
@@ -200,7 +200,7 @@ As expected, the number assigned by the metric is high in the case of LB as show
 Note:
 * The blue lines in the plot above is the change in testing accuracy (The vertical axis to the left) as the batch size increases (X axis). 
 * The strokes in red capture the change in sharpness.
-* Observe the sudden fall in testing accuracy in both the plots, at around batch size of 1500 for plot on left and 500 for plot on right, meaning that the noise in the gradient computation is no longer enough to escape the attraction from sharp minimizer.
+* Observe the sudden fall in testing accuracy in both the plots, at around a batch size of 1500 for plot on left and 500 for plot on the right, meaning that the noise in the gradient computation is no longer enough to escape the attraction from sharp minimizer.
 
 
 ###### How is SB avoiding this solution? [continued...] ######
@@ -215,9 +215,9 @@ Answer: Noise.
 
 
 ### Does not amount to reducing the sharpness of the solution ###
-* Data augmentation: Random transformations over the images: random rotations, translations, horizontal reflections etc.; Basically, adding noise to the weight updates.
+* Data augmentation: Random transformations over the images: random rotations, translations, horizontal reflections, etc.; Basically, adding noise to the weight updates.
 * Conservative training: Make good use of data in a given batch before moving on to the next batch, this involves more than one update on a single batch.
-* Robust training: Classical approaches search for a lowest point in valley, while these approaches attempt to lower an $\epsilon$-disc down the loss surface. Surprisingly, this method affected neither test accuracy nor sharpness.
+* Robust training: Classical approaches search for a lowest point in the valley, while these approaches attempt to lower an $\epsilon$-disc down the loss surface. Surprisingly, this method affected neither test accuracy nor sharpness.
 
 
 
@@ -228,12 +228,8 @@ The authors answered one such question asked by a reviewer [3]
 Thank you for your review. 
 We experimented with additive random Gaussian noise (both in gradients 
 and in iterates), noisy labels and noisy input-data. 
-However, despite significant tuning of the hyperparameters of the 
-random noise, we did not observe any consistent improvements in testing 
-error.  
-Overall, our feeling is that this needs deeper investigation and that 
-LB methods may need to be modified in a more fundamental way to achieve 
-good generalization.
+However, despite significant tuning of the hyperparameters of the random noise, we did not observe any consistent improvements in testing error.  
+Overall, our feeling is that this needs deeper investigation and that LB methods may need to be modified in a more fundamental way to achieve good generalization.
 </pre>
 
 Note: There is a difference between noise and intelligent guess.
@@ -254,7 +250,7 @@ How are deep networks able to generalize so well?
 ###### The big question ######
 * The state-of-art networks that did well on CIFAR10 and ImageNet datasets when trained on the same dataset with randomized labels or pixels, converged to zero training error.
 * This means that such networks have enough capacity to remember the data-points that they are trained on. 
-* Yet, they do not. Inspite of having a perfectly valid solution (training loss 0), the one corresponding to remembering all the data, the optimization procedure unfailingly finds a better solution (the one with low generalization error). 
+* Yet, they do not. In spite of having a perfectly valid solution (training loss 0), the one corresponding to remembering all the data, the optimization procedure unfailingly finds a better solution (the one with low generalization error). 
   What is causing this?
 
 
@@ -264,9 +260,9 @@ How are deep networks able to generalize so well?
 ![Randomization tests](md_slides/_images/nnet_gen_how/random_tests.png)
 
 Note:
-* Average loss on training data goes to zero irrespective of the data transformations like: random labels, random/shuffled pixels.
+* Average loss of training data goes to zero irrespective of the data transformations like: random labels, random/shuffled pixels.
 * Results for random transformations is reported only for the case when there is no other explicit regularization.
-* The results shown above are for CIFAR10 dataset (which is smaller than Imagenet). On CIFAR10, smaller versions of the networks such as Inception, Alexnet, MLPs, that are designed for Imagenet task, are used. On Imagenet, the training error did not converge to 100%, but only 95.2 top-1 accuracy (which is still very good for million labels).
+* The results shown above are for the CIFAR10 dataset (which is smaller than Imagenet). On CIFAR10, smaller versions of the networks such as Inception, Alexnet, MLPs, that are designed for Imagenet task, are used. On Imagenet, the training error did not converge to 100%, but only 95.2 top-1 accuracy (which is still very good for million labels).
 * The case of random labels take longer to converge than the case of random pixels which involves more randomization. This could be because in the case of random pixels, the images are well separated; in the case of random labels, the images are still correlated.
 
 
@@ -280,7 +276,7 @@ $\sigma\_1$...$\sigma\_n$ $\in$ {$\pm 1$} i.i.d. uniform random binary labels.
 
 Note: 
 * We need generalization bound to identify solutions that generalize to ones that do not.
-* The existing methods that bound VC-dimension or its continous analog, fat-shattering dimension do not seem to explain the generalization behavior.  
+* The existing methods that bound VC-dimension or its continuous analog, fat-shattering dimension do not seem to explain the generalization behavior.  
 * The paper also mentions about weaker notions of uniform stability, but concludes that it is difficult to utilize these effectively. 
 They measure the sensitivity to replacing one of the data points.
 
@@ -313,13 +309,13 @@ Two commonly used implicit regularizers are (a) early stopping (b) batch normali
 Note: 
 * The shaded area is what could have been gained if stopped early.
 * "Although not explicitly designed for regularization, batch normalization is usually found to improve the generalization performance". The impact of batch norm is only 3-4% (figure 2b)
-In the later sections, they show that SGD also does implicit regularization. It is specially handled.
+In later sections, they show that SGD also does implicit regularization. It is specially handled.
 
 
 
 ###### Concluding remarks about regularization ######
 * Explicit and implicit regularizers when properly tuned have improved the generalization performance consistently.
-* However, it is unlikely that they are fundamental reason for generalization. 
+* However, it is unlikely that they are fundamental for generalization. 
 
 
 
@@ -341,7 +337,7 @@ Since *n* can be very large, they also provide a construction such that the netw
 
 
 ###### Is SGD responsible for generalization? ######
-* The solution obtained by SGD in the linear case is looked at, to better understand the behaviour of its solution.
+* The solution obtained by SGD in the linear case is looked at, to better understand the behavior of its solution.
 * In the linear case
 
   $$min\_{w \in \mathbb{R}^d} \frac{1}{n} \sum\_{i=1}^nloss(w^Tx\_i, y\_i)$$
@@ -351,7 +347,7 @@ Since *n* can be very large, they also provide a construction such that the netw
 * The updates of SGD at each step are of the form $w\_{t+1} \leftarrow w\_{t}-\eta e\_tx\_{i\_t}$. The final solution can be written as $w=X^T\alpha$. 
   This reduces to
   $$XX^T\alpha = y$$
-* $XX^T$ is the kernal gram matrix.
+* $XX^T$ is the kernel gram matrix.
 * The equation above can be solved exactly for at least small datasets.
 * The solution found by solving the equation above for MNIST and CIFAR10 dataset have an error rate (best) of 1.2% and 15% respectively.
 
@@ -363,10 +359,10 @@ Since *n* can be very large, they also provide a construction such that the netw
 
 Note: I have several issues with this section of the paper.
 * It is shown that SGD finds a better solution by looking for one with minimum norm. We don't know if minimum norm is always a good thing as pointed out by this paper itself.
-* We do not know if other optimizers are also doing this, I think any local optimizer starting at origin will find a minimum norm solution.
-* As shown by the first paper I discussed in this content, LB methods get stuck in solutions which are probably of lesser norm because LB takes careful steps and sticks close to the origin, which turn out to have bad effect on generalization.
+* We do not know if other optimizers are also doing this, I think any local optimizer starting at the origin will find a minimum norm solution.
+* As shown by the first paper I discussed in this content, LB methods get stuck in solutions which are probably of lesser norm, because LB takes careful steps and sticks close to the origin, which turn out to have a bad effect on a generalization.
   The power of SGD is in finding a flat minimizer, rather.
-* I do not understand the l2 norm argument, 220 and 390 one. When pre-processed, the input space changes, the values found: "220" and "390" are obviously minimum values in their respective spaces. The fact that the value in the second case is greater than the former means that the solution in first case is no longer a solution in the second case. I have no idea what point they are trying to make, but in general l2 regularization isn't the answer because all such regularization do not impact much the test error.
+* I do not understand the l2 norm argument, 220 and 390 one. When pre-processed, the input space changes, the values found: "220" and "390" are obviously minimum values in their respective spaces. The fact that the value in the second case is greater than the former means that the solution in the first case is no longer a solution in the second case. I have no idea what point they are trying to make, but in general l2 regularization isn't the answer because all such regularization does not impact much the test error.
 * There are a lot of details missing from the paper, in the case of MNIST and CIFAR, d<<n, they have transformed the input space to reverse it. No idea what they are.
 * More interesting discussion can be found at [5]
 
@@ -374,7 +370,7 @@ Note: I have several issues with this section of the paper.
 
 ###### Conclusion ######
 * The effective capacity of several networks is large enough to shatter the training data, and yet they do fine on test data. 
-  It is still a missing piece of puzzle as to what agent is acting the Wizard.
+  It is still a missing piece of the puzzle as to what the agent is responsible.
 * Yet to discover formal measures under which these enormous models are simple and finally explain the generalization.
 
 
@@ -382,7 +378,7 @@ Note: I have several issues with this section of the paper.
 ###### A Case study ######
 An implementation of the scaled-down ALexNet for CIFAR10 described in the paper is available as a [tensorflow model](https://github.com/tensorflow/models/blob/master/slim/nets/cifarnet.py) (perhaps implemented by this team).
 
-I trained this network on true CIFAR10 dataset and with pixels randomized in CIFAR10.
+I trained this network on the true CIFAR10 dataset and with pixels randomized in CIFAR10.
 The parameter configuration is as follows:
 ```txt
 optimizer: SGD
@@ -413,7 +409,7 @@ These are only my observations, but not tested with rigor.
 ![Loss when SGD is used](md_slides/_images/expt/cifar10_rnd_90K.png)
 
 
-In the case when I missed the first line in the image preprocessing, the loss behaviour is shown in the image below.
+In the case when I missed the first line in the image preprocessing, the loss behavior is shown in the image below.
 ```python
 image = image/255.
 image = tf.image.per_image_standardization(image)
@@ -436,18 +432,18 @@ Note: Just did not converge even after 300K iterations.
 **Frobenius norm** 10.795; max: 50.955; min: 0.063  
 **Smoothness metric** 263.928 $\pm$ 3.141  
 
-Note: * The frobenius norm reported is the average over all the training varaibles.
-* The smoothness metric is reported with average and std. deviation across three runs with parameters: 100 neighbours considered in hyper-sphere given by $\epsilon$=e-3. *cross entropy loss* is used in the place of the function, f. 
+Note: * The Frobenius norm reported is the average over all the training variables.
+* The smoothness metric is reported with average and std. deviation across three runs with parameters: 100 neighbors considered in hyper-sphere given by $\epsilon$=e-3. *cross entropy loss* is used in the place of the function, f. 
 
 
-The value assigned by the smoothness metric [1] is order of magnitude bigger than in the case of model learned with randomized pixels. 
+The value assigned by the smoothness metric [1] is orders of magnitude bigger than in the case of model learned with randomized pixels. 
 
 It is also shown in [1] that SGD updates have noise that will keep it away from such valleys. 
 I strongly believe this to be one of the reasons why the solution found by SGD in the case of true data generalizes well because SGD cannot precisely navigate down the valley. 
 In the case of random pixels, since there is no better solution, SGD manages to find it, perhaps.
 
 
-Regarding the reported norm, I expected the norm in the case of over-fitting to be much larger. Nevertheless, the norm of over-fitted model is stll higher and SGD is known to find a minimum norm solution.
+Regarding the reported norm, I expected the norm in the case of over-fitting to be much larger. Nevertheless, the norm of over-fitted model is still higher and SGD is known to find a minimum norm solution.
 
 Because of the reasons above, I do not find the generalization capability of deep networks to be very confounding.
 
@@ -473,16 +469,24 @@ $$c(x) = \sum_{j=1}{w_j max(\langle a,x\rangle-b_j, 0)}$$
 The weights from input to the layer are shared: *a*.
 The activations from the layer are combined with the vector: *w*.
 
-Note: For proof look at [4]; I am only interested in an intuitive explanation.
+Note: For proof, look at [4]; I am only interested in an intuitive explanation.
 
 
-Basically, the plan is to make different number of neurons to activate (classic trick).
+Basically, the plan is to make a different number of neurons to activate (classic trick).
 That is $b\_1<x\_1<...b\_n<x\_n$, which means the number of activated neurons for the input $x_i$ is i.
 
 $x_i$s are the inputs to the first layer that is $\langle a,z\_i\rangle$.
 Since *a* and *b* are both unknowns, choose a value for a and for each of the distinct values of $\langle a,z\_i\rangle$, choose the value for *$b_i$*.
 
 Finally, we have $y=Aw$ where A is $max(\langle a,x\rangle-b_j, 0)$. 
-The constuction is such that A is full rank, hence *w* is solvable.
+The construction is such that A is full rank, hence *w* is solvable.
 
-Note: For example, the weights learned by such network on XOR input would show the same behavior that I mentioned with classic trick above.
+Note: For example, the weights learned from such network on XOR input would show the same behavior that I mentioned with the classic trick above.
+
+
+### Contact ###
+Vihari Piratla 
+
+IIT Bombay
+
+viharipiratla@gmail.com
