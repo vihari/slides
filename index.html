@@ -20,6 +20,17 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
+		<style>
+		  .reveal h2 { font-size: 1.6em; }
+
+		  .scrollable {
+		  overflow-y: auto  !important;
+		  overflow-x: hidden !important;
+		  height: 700px;
+		  }
+
+		</style>
 	</head>
 	<body>
 
@@ -50,7 +61,13 @@
 					{ src: 'plugin/notes/notes.js', async: true },
 			                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 			                { src: 'plugin/math/math.js', async: true }
-				]
+			],
+			// Bounds for smallest/largest possible scale to apply to content
+			minScale: 0.1,
+			maxScale: 2.0,
+			margin: 0.2,
+			width: 1024,
+			height: 768			
 			});
 		</script>
 	</body>

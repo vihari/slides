@@ -1,4 +1,4 @@
-###### Introduction ######
+## Introduction ##
 Things you should know before we proceed
 * Gradient descent optimization procedures -- weight updates proportional to the gradient. Several optimizers such as Rmsprop, SGD, momentum, ADAM exist. They are all slight variations that generally only affect the convergence rate and can sometimes find a better solution.
 * Optimization parameter: batch size. Some variants of optimization consider the errors on all the data available (full batch learning), some consider a (relatively) small batch (mini-batch) or only one example in each step (stochastic).
@@ -19,13 +19,13 @@ We only care about ReLU (Rectified Linear Units) activation function for this ma
 
 
 
-###### Common Image classification datasets ######
+## Common Image classification datasets ##
 [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html): 60,000 images, 10 classes, 32x32 resolution, 6,000 images per class
 
 ![CIFAR10](md_slides/_images/cifar10.png)
 
 
-###### [Imagenet](http://cs.stanford.edu/people/karpathy/cnnembed/cnn_embed_1k.jpg) ######
+## [Imagenet](http://cs.stanford.edu/people/karpathy/cnnembed/cnn_embed_1k.jpg) ##
 
 1.2 million images, 1000 classes, ~ 300x300 resolution
 
@@ -35,7 +35,7 @@ We only care about ReLU (Rectified Linear Units) activation function for this ma
 
 
 
-###### Popular neural nets for Image Classification ######
+## Popular neural nets for Image Classification ##
 **AlexNet** and **Inception** are two networks that are designed for performance on the ImageNet.
 
 AlexNet:
@@ -50,12 +50,12 @@ For more information, consult this [blog](https://culurciello.github.io/tech/201
 
 
 
-###### On Large-Batch Training For Deep Learning: Generalization Gap and Sharp Minima [1] ######
+## On Large-Batch Training For Deep Learning: Generalization Gap and Sharp Minima [1] ##
 Understand why Small Batch (SB) methods generally find a better solution than Large Batch (LB) ones.
 
 
 
-###### Why not just use Small Batch methods? ######
+## Why not just use Small Batch methods? ##
 
 Large batches are typically in the order of thousands and batch sizes less than 512 are considered small.
 
@@ -86,7 +86,7 @@ By reducing the time per update step, it is possible to reduce the computation t
 
 
 
-###### Why is Large Batch bad? ######
+## Why is Large Batch bad? ##
 
 Although, optimization with large and small batch lead to similar performance on train set, the solution obtained by large batch suffers on the test set. 
 
@@ -99,41 +99,41 @@ Although, optimization with large and small batch lead to similar performance on
 
 
 
-###### Guess ######
+## Guess ##
 
 It is conjectured that the LB methods lack explorative properties and settle at a sharp minimizer which may perform well on training data, but may fail on test data.
 
 
 
-###### What are sharp and flat minimizers? ######
+## What are sharp and flat minimizers? ##
 
 > A flat minimizer $\bar{x}$ is one for which the function varies slowly in a relatively large neighborhood of $\bar{x}$. In contrast, a sharp minimizer $\hat{x}$ is such that the function increases rapidly in a small neighborhood of $\hat{x }$.
 
 
-###### What are sharp and flat minimizers? [continued...] ######
+## What are sharp and flat minimizers? [continued...] ##
 ![Sharp vs Flat minimizer](md_slides/_images/lb_vs_sb/sharp_vs_flat_minimizer.png)
 
 
 
-###### Targeted experiments ######
+## Targeted experiments ##
 
 Six multi-class classification network configurations are considered.
 
 ![Network configurations](md_slides/_images/lb_vs_sb/network_configs.png)
 
 
-###### Targeted experiments [continued...] ######
+## Targeted experiments [continued...] ##
 
 * For LB methods, 10% of the training data is chosen as the batch size (which means the batch size varied from 5,000 on MNIST and ~72,000 on TIMIT dataset). For SB, the batch size is set to 256 for all the experiments.
 * Experiments with any of the optimizers: ADAM, ADGRAD, SGD, adaQN gave similar results, all the results reported are with ADAM optimizer.
 
 
-###### Targeted experiments [continued...] ######
+## Targeted experiments [continued...] ##
 ![Dataset sizes](md_slides/_images/lb_vs_sb/dataset_sizes.png)
 
 
 
-###### Recognizing the problem ######
+## Recognizing the problem ##
 
 ![Train and test accuracy](md_slides/_images/lb_vs_sb/train_and_test_acc.png)
 
@@ -143,14 +143,14 @@ Observe that the difference between LB and SB is starker in test accuracy than i
 
 
 
-###### Over-fitting is not the problem ######
+## Over-fitting is not the problem ##
 ![Overfitting not a problem](md_slides/_images/lb_vs_sb/not_overfitting.png)
 
 Note: In both SB and LB cases, the network is trained so as not to deteriorate on validation data.
 
 
 
-###### An evidence for if the sharpness of minima is a problem ######
+## An evidence for if the sharpness of minima is a problem ##
 * The nature of minima can be visualized with something called parametric 1-D plots.
 * If ${x_l}^{\ast}$ and ${x_s}^{\ast}$ are the solutions (weights) corresponding to the large and small batch methods, then the 1-D parametric plots look at the nature of all solutions in 
 $\alpha\*{x_l}^{\ast}+(1-\alpha)\*{x_s}^{\ast}$. 
@@ -159,7 +159,7 @@ $\alpha\*{x_l}^{\ast}+(1-\alpha)\*{x_s}^{\ast}$.
 $\alpha$=1 corresponds to the solution of large batch and $\alpha$=0 to the small batch.
 
 
-###### An evidence for if the sharpness of minima is a problem [continued...] ######
+## An evidence for if the sharpness of minima is a problem [continued...] ##
 ![1-D Parametric plots](md_slides/_images/lb_vs_sb/param_plots.png)
 
 Note: 
@@ -170,7 +170,7 @@ $F_1$ is the most flat of all at $\alpha=1$ and $C_4$ at $\alpha=1$ is a valley 
 
 
 
-###### Sharpness metric ######
+## Sharpness metric ##
 
 $$\phi\_{x,f}(\epsilon, A)=\frac{(max\_{y \in C_\epsilon} f(x+Ay))-f(x)}{1+f(x)}\*100$$
 
@@ -184,7 +184,7 @@ That way both the values in full space around *x* and the sub-space spanned by t
 
 
 
-###### What does the metric say? ######
+## What does the metric say? ##
 
 As expected, the number assigned by the metric is high in the case of LB as shown in the table below. 
 
@@ -193,7 +193,7 @@ As expected, the number assigned by the metric is high in the case of LB as show
 
 
 
-###### How is SB avoiding this solution? ######
+## How is SB avoiding this solution? ##
 
 ![Sharpness with batch size](md_slides/_images/lb_vs_sb/sharpness_batch_size.png)
 
@@ -203,14 +203,14 @@ Note:
 * Observe the sudden fall in testing accuracy in both the plots, at around a batch size of 1500 for plot on left and 500 for plot on the right, meaning that the noise in the gradient computation is no longer enough to escape the attraction from sharp minimizer.
 
 
-###### How is SB avoiding this solution? [continued...] ######
+## How is SB avoiding this solution? [continued...] ##
 
 Answer: Noise.
 > From the results reported in the previous section[slide], it appears that noise in the gradient pushes the iterates out of the basin of attraction of sharp minimizers and encourages movement towards a flatter minimizer where noise will not cause exit from that basin
 
 
 
-###### Can we patch the LB method? ######
+## Can we patch the LB method? ##
 * **Dynamic Sampling:** Start with a small batch and increase the batch size. It is shown to work, but what's the schedule?
 
 
@@ -221,22 +221,26 @@ Answer: Noise.
 
 
 
-###### Can we patch the LB method? [continued...] ######
+## Can we patch the LB method? [continued...] ##
 Can we add noise to the gradients computed in LB method which will perhaps make it more explorative?
 The authors answered one such question asked by a reviewer [3]
 <pre>
 Thank you for your review. 
 We experimented with additive random Gaussian noise (both in gradients 
 and in iterates), noisy labels and noisy input-data. 
-However, despite significant tuning of the hyperparameters of the random noise, we did not observe any consistent improvements in testing error.  
-Overall, our feeling is that this needs deeper investigation and that LB methods may need to be modified in a more fundamental way to achieve good generalization.
+However, despite significant tuning of the hyperparameters of   
+the random noise, we did not observe any consistent improvements  
+in testing error.  
+Overall, our feeling is that this needs deeper investigation and  
+that LB methods may need to be modified in a more fundamental way  
+to achieve good generalization.
 </pre>
 
 Note: There is a difference between noise and intelligent guess.
 
 
 
-###### What's next? ######
+## What's next? ##
 * Can it be analytically proved that the LB methods generally converge to the sharp minimizers of the training functions?
 * How best to patch LB methods to avoid this problem (better weights initialization, neural network architecture, optimization algorithm or regulatory means)?
 
@@ -247,7 +251,7 @@ How are deep networks able to generalize so well?
 
 
 
-###### The big question ######
+## The big question ##
 * The state-of-art networks that did well on CIFAR10 and ImageNet datasets when trained on the same dataset with randomized labels or pixels, converged to zero training error.
 * This means that such networks have enough capacity to remember the data-points that they are trained on. 
 * Yet, they do not. In spite of having a perfectly valid solution (training loss 0), the one corresponding to remembering all the data, the optimization procedure unfailingly finds a better solution (the one with low generalization error). 
@@ -255,7 +259,7 @@ How are deep networks able to generalize so well?
 
 
 
-###### Randomization tests ######
+## Randomization tests ##
 
 ![Randomization tests](md_slides/_images/nnet_gen_how/random_tests.png)
 
@@ -267,7 +271,7 @@ Note:
 
 
 
-###### Can the traditional approaches provide a generalization bound? ######
+## Can the traditional approaches provide a generalization bound? ##
 **Rademacher Complexity (RC) and VC-dimension**
 $$\hat{\Re}\_n(H)=E\_{\sigma}[\sup\_{h \in H} \frac{1}{n} \sum\_{i=1}^{n}{\sigma\_ih(x\_i)}]$$
 $\sigma\_1$...$\sigma\_n$ $\in$ {$\pm 1$} i.i.d. uniform random binary labels.  
@@ -285,14 +289,14 @@ You can skip this slide, and still understand the rest of them.
 
 
 
-###### Are Regularizers responsible for Generalization? ######
+## Are Regularizers responsible for Generalization? ##
 Experimented with three commonly used regularizers
 * **Data augmentation**: Transformations on the image like: random cropping, random perturbation of brightness, saturation, hue and contrast
 * **Weight decay**: an $l_2$ regularizer on the weights.
 * **Dropout**: randomly dropping the output of a layer with a given probability. 
 
 
-###### Are Regularizers responsible for Generalization? [continued...] ######
+## Are Regularizers responsible for Generalization? [continued...] ##
 
 ![Do Regularizers help in Generalization](md_slides/_images/nnet_gen_how/reg_in_gen.png)
 
@@ -301,7 +305,7 @@ The point is to rule out regularizers as "the" reason for generalization.
 
 
 
-###### Implicit Regularizers? ######
+## Implicit Regularizers? ##
 Two commonly used implicit regularizers are (a) early stopping (b) batch normalization.
 
 ![Implicit Regularizers](md_slides/_images/nnet_gen_how/imp_reg.png)
@@ -313,15 +317,15 @@ In later sections, they show that SGD also does implicit regularization. It is s
 
 
 
-###### Concluding remarks about regularization ######
+## Concluding remarks about regularization ##
 * Explicit and implicit regularizers when properly tuned have improved the generalization performance consistently.
 * However, it is unlikely that they are fundamental for generalization. 
 
 
 
-###### Expressivity of networks ######
+## Expressivity of networks ##
 * The existing methods to compute expressivity only consider what functions over the domain can be represented irrespective of the sample size.
-* This work proves a lower bound on the networks that can perform on a finite sample size.
+* This work proves a lower bound on size of the networks that can perform on a finite sample size.
 * Theorem: There exists a two-layer neural network with ReLU activations and 2n + d weights that can represent any function on a sample of size n in d dimensions.
 
 Note: Expressivity of a network provides insight into what functions over the domain a network is capable of representing. 
@@ -336,7 +340,7 @@ Since *n* can be very large, they also provide a construction such that the netw
 
 
 
-###### Is SGD responsible for generalization? ######
+## Is SGD responsible for generalization? ##
 * The solution obtained by SGD in the linear case is looked at, to better understand the behavior of its solution.
 * In the linear case
 
@@ -357,26 +361,21 @@ Since *n* can be very large, they also provide a construction such that the netw
   By doing so, SGD behaves like an implicit regularizer.
 * **Minimum norm isn't always a good thing**: "On MNIST data, the l2-norm of the minimum norm solution with no preprocessing is approximately 220. With wavelet preprocessing, the norm jumps to 390. Yet the test error drops by a factor of 2"
 
-Note: I have several issues with this section of the paper.
-* It is shown that SGD finds a better solution by looking for one with minimum norm. We don't know if minimum norm is always a good thing as pointed out by this paper itself.
-* We do not know if other optimizers are also doing this, I think any local optimizer starting at the origin will find a minimum norm solution.
-* As shown by the first paper I discussed in this content, LB methods get stuck in solutions which are probably of lesser norm, because LB takes careful steps and sticks close to the origin, which turn out to have a bad effect on a generalization.
-  The power of SGD is in finding a flat minimizer, rather.
-* I do not understand the l2 norm argument, 220 and 390 one. When pre-processed, the input space changes, the values found: "220" and "390" are obviously minimum values in their respective spaces. The fact that the value in the second case is greater than the former means that the solution in the first case is no longer a solution in the second case. I have no idea what point they are trying to make, but in general l2 regularization isn't the answer because all such regularization does not impact much the test error.
-* There are a lot of details missing from the paper, in the case of MNIST and CIFAR, d<<n, they have transformed the input space to reverse it. No idea what they are.
-* More interesting discussion can be found at [5]
+Note:
+* Openreview has some interesting discussion on this section [5]
 
 
 
-###### Conclusion ######
+## Conclusion ##
 * The effective capacity of several networks is large enough to shatter the training data, and yet they do fine on test data. 
   It is still a missing piece of the puzzle as to what the agent is responsible.
 * Yet to discover formal measures under which these enormous models are simple and finally explain the generalization.
+* A key takeaway is that none of the regularization methods or model capacity is responsible for the generalization behavior and, perhaps, it is the dynamics of the optimization procedure that is causing this.
 
 
 
-###### A Case study ######
-An implementation of the scaled-down ALexNet for CIFAR10 described in the paper is available as a [tensorflow model](https://github.com/tensorflow/models/blob/master/slim/nets/cifarnet.py) (perhaps implemented by this team).
+## A Case study ##
+An implementation of the scaled-down AlexNet for CIFAR10 described in the second paper is available as a [tensorflow model](https://github.com/tensorflow/models/blob/master/slim/nets/cifarnet.py) (perhaps implemented by this team itself).
 
 I trained this network on the true CIFAR10 dataset and with pixels randomized in CIFAR10.
 The parameter configuration is as follows:
@@ -392,10 +391,10 @@ input augmentation: None
 
 
 
-###### AlexNet on Randomized CIFAR10 ######
+## AlexNet on Randomized CIFAR10 ##
 I found that the convergence on this dataset is extremely sensitive to regularization.
-Failed to converge in the following cases:
-* learning rate, suggested is 0.01 and I tried with 0.1
+Failed to converge in each of the following cases:
+* learning rate of 0.1 rather than the suggested 0.01
 * weight decay: 0.004
 * dropout: 0.5
 * any bit of data augmentation
@@ -407,6 +406,8 @@ These are only my observations, but not tested with rigor.
 ### It did memorize the dataset ###
 
 ![Loss when SGD is used](md_slides/_images/expt/cifar10_rnd_90K.png)
+
+Note: This is when the model is trained on CIFAR10 with randomized labels.
 
 
 In the case when I missed the first line in the image preprocessing, the loss behavior is shown in the image below.
@@ -424,42 +425,53 @@ Note: Just did not converge even after 300K iterations.
 
 #### Model learned on true data ####
 
-**Frobenius norm** 9.600; max: 50.636;min: 0.110  
-**Smoothness metric** 29.821 $\pm$ 0.250  
+Smoothness metric: 29.821 $\pm$ 0.250  
 
 #### Model learned on randomized pixels ####
 
-**Frobenius norm** 10.795; max: 50.955; min: 0.063  
-**Smoothness metric** 263.928 $\pm$ 3.141  
+Smoothness metric: 263.928 $\pm$ 3.141  
 
-Note: * The Frobenius norm reported is the average over all the training variables.
-* The smoothness metric is reported with average and std. deviation across three runs with parameters: 100 neighbors considered in hyper-sphere given by $\epsilon$=e-3. *cross entropy loss* is used in the place of the function, f. 
+Note: * The reported smoothness metric is averaged over three runs (the number to the right of this value is the standard deviation), with parameters: 100 neighbors considered in hyper-sphere given by $\epsilon$=e-3. *Cross Entropy loss* is used in the place of the function, f. 
 
 
 The value assigned by the smoothness metric [1] is orders of magnitude bigger than in the case of model learned with randomized pixels. 
 
 It is also shown in [1] that SGD updates have noise that will keep it away from such valleys. 
-I strongly believe this to be one of the reasons why the solution found by SGD in the case of true data generalizes well because SGD cannot precisely navigate down the valley. 
-In the case of random pixels, since there is no better solution, SGD manages to find it, perhaps.
+I strongly believe this to be one of the reasons why the solution found by SGD in the case of true data generalizes well; Because SGD cannot precisely navigate down the valley to find the solution that corresponds to over-fitting [1]. 
+In the case of random pixels, since there is no better solution, SGD manages to find it (the over-fitting solution), perhaps.
 
-
-Regarding the reported norm, I expected the norm in the case of over-fitting to be much larger. Nevertheless, the norm of over-fitted model is still higher and SGD is known to find a minimum norm solution.
-
-Because of the reasons above, I do not find the generalization capability of deep networks to be very confounding.
+Note: The implicit assumption I made here is that the smoothness metric of the solutions that corresponds to over-fitting solution on true data will have similar smoothness metric as the solution found in the case of randomized labels (the over-fit)
 
 
 
-# References #
+## Interesting remarks/critics from the audience ##
+* $l\_2$ and $l\_1$ norm should be used with caution. They both penalize weights such that those that do not affect the loss much, remain low. Although, it may reduce the model complexity; It is not guaranteed that such regularizations can find a better solution. Consider the case when it is desired that some parameters are unbounded or take a finite non-zero value. In a nutshell, such weight penalties should not be used in a one-size-fits-all manner.
+
+
+* When a model that has 100% accuracy on the train set, but only 84% on the test set; A model with 16% generalization error is considered an over-fit, at least for the traditional Machine Learning models. Why is that not the case here?  
+ I agree that the solution with 16% generalization error may not be the best and can be improved, but it is not considered an overfit, at least not according to the authors. The authors consider over-fitting the case when the performance on test set is no better than chance. 
+
+
+* Why are sharp minimizers bad for generalization?
+  * There are several explanations and links provided in section 2.1 of [1].
+  According to the minimum description length (MDL) theory, the models that require fewer bits to describe, generalize better. Since flat minima can be specified with lower precision, they have lower MDL.
+  * An alternate explanation is provided in [6]. In [6], the authors have proposed a variant of SGD called Entropy-SGD which is specially designed to find flat minimas. The following explanation is provided.  
+  If we consider a prior on the parameters, say a Gaussian prior with fixed variance, the marginal likelihood of data would be higher in the case of flatter minima. 
+  $$P(x) = P(x/\theta)P(\theta)$$
+
+
+
+## References ##
 
  1. [ON LARGE-BATCH TRAINING FOR DEEP LEARNING: GENERALIZATION GAP AND SHARP MINIMA](https://openreview.net/pdf?id=H1oyRlYgg)
  2. Yann LeCun's Efficient BackProp.
  3. [Discussion on Openreview for 1 above](https://openreview.net/forum?id=H1oyRlYgg&noteId=H1oyRlYgg)
  4. [UNDERSTANDING DEEP LEARNING REQUIRES RETHINKING GENERALIZATION](https://openreview.net/pdf?id=Sy8gdB9xx)
  5. [Discussion on Openreview for above](https://openreview.net/forum?id=Sy8gdB9xx&noteId=Sy8gdB9xx)
+6. [ENTROPY-SGD: BIASING GRADIENT DESCENT INTO WIDE VALLEYS](https://arxiv.org/pdf/1611.01838.pdf)
 
 
-
-###### Proof of theorem (Extra slide) ######
+## Proof of theorem (Extra slide) ##
 Theorem: *There exists a two-layer neural network with ReLU activations and 2n + d weights that can represent any function on a sample of size n in d dimensions.*
 
 Sketchy proof: For weight vector w, b $\in \mathbb{R}^n$ and a $\in \mathbb{R}^d$, consider the function to learn: c: $\mathbb{R}^n\rightarrow \mathbb{R}$
@@ -481,10 +493,12 @@ Since *a* and *b* are both unknowns, choose a value for a and for each of the di
 Finally, we have $y=Aw$ where A is $max(\langle a,x\rangle-b_j, 0)$. 
 The construction is such that A is full rank, hence *w* is solvable.
 
-Note: For example, the weights learned from such network on XOR input would show the same behavior that I mentioned with the classic trick above.
+Note: The weights learned by a simple network on XOR data would show the same behavior, $b\_1<x\_1...b\_n<x\_n$; That is why I call it the classic trick. 
 
 
-### Contact ###
+
+## Contact ##
+
 Vihari Piratla 
 
 IIT Bombay
