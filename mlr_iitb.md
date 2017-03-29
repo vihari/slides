@@ -468,7 +468,7 @@ Note: The implicit assumption I made here is that the smoothness metric of the s
  3. [Discussion on Openreview for 1 above](https://openreview.net/forum?id=H1oyRlYgg&noteId=H1oyRlYgg)
  4. [UNDERSTANDING DEEP LEARNING REQUIRES RETHINKING GENERALIZATION](https://openreview.net/pdf?id=Sy8gdB9xx)
  5. [Discussion on Openreview for above](https://openreview.net/forum?id=Sy8gdB9xx&noteId=Sy8gdB9xx)
-6. [ENTROPY-SGD: BIASING GRADIENT DESCENT INTO WIDE VALLEYS](https://arxiv.org/pdf/1611.01838.pdf)
+ 6. [ENTROPY-SGD: BIASING GRADIENT DESCENT INTO WIDE VALLEYS](https://arxiv.org/pdf/1611.01838.pdf)
 
 
 ## Proof of theorem (Extra slide) ##
