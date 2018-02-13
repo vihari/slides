@@ -1,0 +1,213 @@
+% Created 2018-02-13 Tue 01:07
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{Vihari Piratla}
+\date{11-02-1993}
+\title{bpl\_notes}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 25.3.1 (Org mode 8.2.10)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Paper}
+\label{sec-1}
+\href{http://web.mit.edu/cocosci/Papers/Science-2015-Lake-1332-8.pdf}{Human-level concept learning through probabilistic program induction}
+
+\href{https://cims.nyu.edu/~brenden/LakeEtAl2015Science_supp.pdf}{Supplementary}
+
+\emph{published in Science Magazine, 2015}
+
+Highly related publication by Hinton in NIPS 2006: \href{http://www.cs.toronto.edu/~hinton/absps/vnips.pdf}{Inferring Motor Programs from Images of Handwritten Digits}
+
+Notes: This paper stems out of the intersection of psychology, cognitive and computer science
+
+\section{Motivation}
+\label{sec-2}
+\begin{enumerate}
+\item People can generalize easily from just a few examples while machines need to see (on the order) millions of labeled examples.
+\item Humans have a much richer representation of the learned concepts which enable explanation and imagination.
+\end{enumerate}
+
+\begin{quote}
+The center problem of AI is the question: What is the letter 'a'?
+
+For any program to handle letterforms with the flexibility that human beings do, it would have to possess full-scale artificial intelligence”
+--- Douglas Hofstadter, "Metamagical Themas: Questing For The Essence Of Mind And Pattern"
+\end{quote}
+
+
+\section{What?}
+\label{sec-3}
+Bayesian Program Learning (BPL) for modelling and generating new examples on the Omniglot dataset.
+Concepts represented as probabilistic programs.
+\begin{itemize}
+\item Beats other models and human on one-shot classification
+\item Proposed a visual turing test to qualitatively measure the generalisation capabilities of a model.
+\end{itemize}
+
+Omniglot is a dataset containing 1,623 characters from 50 writing systems.
+The dataset is collected from Amazon Mechanical Turk (AMT), several hand-drawn versions of the images are collected from human subjects who draw a depicted symbol.
+Resulting in a list of <x, y, time> tuples.
+
+\section{Bayesian Program Learning (at a glance)}
+\label{sec-4}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_omniglot.png}
+\caption{Program learning and classification on Omniglot}
+\end{figure}
+
+The images in the top row are the best five parses for the instance, different colors correspond to different strokes.
+New instance is classified based on how well the program for a type explains the new instance. 
+
+\section{Modeling Strokes}
+\label{sec-5}
+Every stroke is composed of sub-parts called primitives. 
+Primitives are drawn from a library of cubic splines such as in the figure below. 
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_plib.png}
+\caption{Library of primitives}
+\end{figure}
+
+Every stroke is a list of triplets: < \textbf{z}, \textbf{x}, y >.
+\textbf{z} is a vector of integer indices that correspond to the selection over primitives.
+\textbf{x} $\in \mathbb{R}^{10}$ gives the position of each of the five control points of the spline and y denotes the scale of the shape. 
+One sub-part starts where the sub-part before ends.
+
+\section{Composing strokes (relations)}
+\label{sec-6}
+The spatial relations between the strokes are modeled as one of 
+\begin{itemize}
+\item Independent -- does not depend on the position of the previous stroke
+\item Start, end -- if it starts at beginning or at the end of the previous stroke.
+\item Along -- connects somewhere along the previous stroke.
+\end{itemize}
+
+\section{Generative Model}
+\label{sec-7}
+
+$P(\psi, \theta^{(1)}, \cdots, \theta^{(m)}, I^{(1)}\cdots I^{(m)}) = P(\psi)\prod_{i=1}^{m}P(I^{(m)}|\theta^{(m)})P(\theta^{(m)}|\psi)$
+
+$\psi$ is type level model parameter.  
+$\theta^{(m)}$ is the token level model parameter that capture the motor level variance in generation.
+
+\subsection{Type Level variables}
+\label{sec-7-1}
+$\psi=\{\kappa, R, S\}$
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_typevars.png}
+\caption{Type level variables}
+\end{figure}
+
+\subsection{Token Level variables}
+\label{sec-7-2}
+$\theta^{(m)} = \{L^{(m)}, x^{(m)}, y^{(m)}, R^{(m)}, A^{(m)}, {\sigma_b}^{(m)}, \epsilon^{(m)}\}$
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_tokenvars.png}
+\caption{Token Variables}
+\end{figure}
+
+\section{Learning}
+\label{sec-8}
+\subsection{Learning Primitives}
+\label{sec-8-1}
+\begin{itemize}
+\item After spatially and temporally standardizing the data, 55,000 sub-parts\footnote{sub-parts are defined to be the trajectories between two pauses.} trajectories are collected.
+\item GMM with 1250 mixtures (over 30 alphabets) is used to partition the trajectories and learn primitives.
+\end{itemize}
+\subsection{Learning start positions}
+\label{sec-8-2}
+The position of the first and the second stokes is learned by fitting a multinomial grid over the images.
+An aggregated model for the rest of the strokes. 
+\subsection{Learning relations and token variability}
+\label{sec-8-3}
+A more complicated model is fit over the 800 background images and statics are collected over these fits to compute the relational params, positional noise. 
+$\sigma_x, \sigma_y, \sigma_\tau$ are estimated from how much the shape and scale change from program that is fit on one example when used on another example.
+\subsection{Global transformation}
+\label{sec-8-4}
+The glabal transformation (translation and rotation) is estimated simply by computing the variance of transformations over the background images.
+
+\section{Inference}
+\label{sec-9}
+Inference is tricky since it requires exploration of combinatorial space over number of (sub-)parts, types, relations etc. 
+MCMC is found to be slow and gets stuck in local minima.
+
+\subsection{Character skeletons and random parses}
+\label{sec-9-1}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_skeleton.png}
+\caption{Character skeleton from an image}
+\end{figure}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_parses.png}
+\caption{Generating Random Parses}
+\end{figure}
+
+The points in red are the junction points.
+For random parses, an action needs to be taken at each of these red points.
+$P(A) = exp(-\lambda\theta_A)$
+
+\begin{itemize}
+\item Sub-strokes are identified by greedily adding, removing or replacing the pauses in order to maximize the observed trajectory.
+Once the strokes and their sub-parts are identified, K (=5) best candidate programs: $\psi$ and $\theta^{(m)}$ are identified.
+\end{itemize}
+
+\section{Approximate inference for one shot classification}
+\label{sec-10}
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_approx_infer.png}
+\caption{One shot classification}
+\end{figure}
+
+Better results are found when considering conditional from both the sides i.e. $P(I^{(c)}|I^{(t)})$ and $P(I^{(t)}|I^{(c)})$;
+$I^{(c)}$ is the seen examples and $I^{(t)}$ is the new test image.
+
+\section{Results}
+\label{sec-11}
+Beats human (and other deepnets) on one-shot classification task.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/bpl_results.png}
+\caption{Results}
+\end{figure}
+
+Compared with lesion models that give up on either learning to learn an aspect of the model such as sub-stroke shape/scale, stroke relations or position.
+The model is also compared with the case when an image is modeled with just one cubic b-spline ie. no compositionality.
+\subsection{Visual Turing test}
+\label{sec-11-1}
+I could only score 55\% on this test.
+\begin{figure}[htb]
+\centering
+\includegraphics[width=.9\linewidth]{./md_slides/_images/vturing.png}
+\caption{Visual Turing Test}
+\end{figure}
+% Emacs 25.3.1 (Org mode 8.2.10)
+\end{document}
