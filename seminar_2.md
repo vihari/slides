@@ -26,8 +26,8 @@ Related publication by Hinton in NIPS 2006: [Inferring Motor Programs from Image
 
 Bayesian Program Learning (BPL) for modelling and generating new examples on the Omniglot dataset.
 Concepts represented as probabilistic programs.
-	- Beats other models and human on one-shot classification
-	- Does better than other models at one-shot generalisation as measured through visual turing test.
+- Beats other models and human on one-shot classification
+- Does better than other models at one-shot generalisation as measured through visual turing test.
 
 
 Omniglot is a dataset containing 1,623 characters from 50 writing systems.
@@ -177,12 +177,23 @@ I could only score 55% on this test.
 
 <img src="./md_slides/_images/vturing.png" alt="Visual Turing Test" height="500"></img>
 
+
+
+# Drawbacks
+
+The model is heavily engineered towards the dataset and the task. The generative model makes several assumptions about the task and requires the same or more effort to engineer a generative model for a different task.
+* why is the generative process a two level hierarchy? i.e. why can't everything be treated as strokes? HOw is the granularity of the primitives choosen?
+* Why are there 4 different relations (spatial) between the strokes, can we just do with one: the along relation type?  
+* Why are the experiments only limited to one-shot generalization, how about domain generalization?   
+* Although, the model is trained only on small chunk of data, it requires the time lapse data of the strokes.
+* On omniglot dataset, the variance across symbols is limited, it should ideally be tested on more complex dataset such as the gfornts dataset.
+
 <!--<div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> sub-parts are defined to be the trajectories between two pauses.</div>
--->
 
 </div>
 </div>
+-->
