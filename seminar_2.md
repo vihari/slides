@@ -114,7 +114,7 @@ An aggregated model for the subsequent strokes.
 ## Learning relations and token variability<a id="sec-8-3" name="sec-8-3"></a>
 
 A more complicated model is fit over the 800 background images and statics are collected over these fits to compute the relational params, positional noise. 
-\(\sigma_x, \sigma_y, \sigma_\tau\) are estimated from how much the shape and scale change from program that is fit on one example when used on another example.
+$\sigma_x, \sigma_y, \sigma_\tau$ are estimated from how much the shape and scale change from program that is fit on one example when used on another example.
 
 
 ## Global transformation<a id="sec-8-4" name="sec-8-4"></a>
@@ -145,7 +145,7 @@ For random parses, an action needs to be taken at each of these red points.
 $P(A) = exp(-\lambda\theta_A)$
 
 -   Sub-strokes are identified by greedily adding, removing or replacing the pauses maximizing the likelihood of the observed trajectory.
-	A decompoaition of the image into substokes is scored as follows  
+	A decomposition of the image into substokes is scored as follows  
 	<img src="./md_slides/_images/bpl_eqn.png" height=100/>
 -   Once the strokes and their sub-parts are identified, K (=5) best candidate programs: $\psi$ and $\theta^{(m)}$ are identified.
 
@@ -182,11 +182,13 @@ I could only score 55% on this test.
 # Drawbacks
 
 The model is heavily engineered towards the dataset and the task. The generative model makes several assumptions about the task and requires the same or more effort to engineer a generative model for a different task.
-* why is the generative process a two level hierarchy? i.e. why can't everything be treated as strokes? HOw is the granularity of the primitives choosen?
+* why is the generative process a two level hierarchy? i.e. why can't everything be treated as strokes? How is the granularity of the primitives chosen?
 * Why are there 4 different relations (spatial) between the strokes, can we just do with one: the along relation type?  
+
+
 * Why are the experiments only limited to one-shot generalization, how about domain generalization?   
 * Although, the model is trained only on small chunk of data, it requires the time lapse data of the strokes.
-* On omniglot dataset, the variance across symbols is limited, it should ideally be tested on more complex dataset such as the gfornts dataset.
+* On Omniglot dataset, the variance across symbols is limited, it should ideally be tested on more complex dataset such as the gfonts dataset.
 
 <!--<div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
